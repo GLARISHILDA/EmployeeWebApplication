@@ -34,12 +34,12 @@ namespace EmployeeWebApplication.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetEmployeeDirectory(ODataQueryOptions<EmployeeViewModel> oDataQueryOptions)
+        public async Task<IActionResult> GetEmployeeDirectory(ODataQueryOptions<EmployeeViewModel> oDataOptions)
         {
             var employeeList = await _employeeService.ListAsync();
             var employeeMapper = _employeeMapper.MapList(employeeList).AsQueryable();
             var totalCount = employeeMapper.Count();
-            var oDataResult = oDataQueryOptions.ApplyTo(employeeMapper);
+            var oDataResult = oDataOptions.ApplyTo(employeeMapper);
 
             return View(employeeMapper);
         }
